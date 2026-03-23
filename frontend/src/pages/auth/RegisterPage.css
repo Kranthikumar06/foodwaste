@@ -1,0 +1,258 @@
+.register-page-container {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    background-color: #f4fdf6;
+    font-family: 'Inter', system-ui, sans-serif;
+}
+
+.register-main {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 0 1rem 4rem;
+}
+
+.register-card {
+    width: 100%;
+    max-width: 600px;
+    background: #ffffff;
+    border-radius: 1rem;
+    padding: 2.5rem;
+    box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05);
+    border: 1px solid rgba(76, 175, 80, 0.1);
+    margin-top: 1rem;
+}
+
+.step-indicator {
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+.step-text {
+    font-size: 0.875rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    color: #4caf50;
+    letter-spacing: 0.05em;
+    margin-bottom: 0.75rem;
+}
+
+.progress-bar-container {
+    display: flex;
+    gap: 0.5rem;
+    justify-content: center;
+    max-width: 300px;
+    margin: 0 auto;
+}
+
+.progress-segment {
+    height: 4px;
+    flex: 1;
+    background-color: #e5e7eb;
+    border-radius: 2px;
+    transition: background-color 0.3s;
+}
+
+.progress-segment.active {
+    background-color: #4caf50;
+}
+
+.register-card h2 {
+    font-size: 1.75rem;
+    font-weight: 800;
+    color: #111827;
+    text-align: center;
+    margin: 0 0 2rem 0;
+}
+
+/* Step 1: Role Selection */
+.role-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+}
+
+.role-select-card {
+    border: 2px solid #e5e7eb;
+    border-radius: 0.75rem;
+    padding: 1.5rem 1rem;
+    text-align: center;
+    cursor: pointer;
+    background: white;
+    transition: all 0.2s ease;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.75rem;
+}
+
+.role-select-card:hover {
+    border-color: #a7f3d0;
+    background: #f0fdf4;
+}
+
+.role-select-card.selected {
+    border-color: #4caf50;
+    background: #f0fdf4;
+    box-shadow: 0 4px 12px rgba(76, 175, 80, 0.1);
+}
+
+.role-icon {
+    margin-bottom: 0.5rem;
+    display: flex;
+    justify-content: center;
+}
+
+.role-svg-icon {
+    color: #6b7280;
+    transition: color 0.2s ease;
+}
+
+.role-select-card:hover .role-svg-icon,
+.role-select-card.selected .role-svg-icon {
+    color: #4caf50;
+}
+
+.role-title {
+    font-size: 1.125rem;
+    font-weight: 700;
+    color: #111827;
+}
+
+.role-desc {
+    font-size: 0.75rem;
+    color: #4b5563;
+    line-height: 1.4;
+}
+
+/* Form Styles */
+.form-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.25rem;
+}
+
+.form-grid.full {
+    grid-template-columns: 1fr;
+}
+
+.form-group.full-width {
+    grid-column: 1 / -1;
+}
+
+select.form-input {
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%236b7280' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3e%3c/svg%3e");
+    background-position: right 0.5rem center;
+    background-repeat: no-repeat;
+    background-size: 1.5em 1.5em;
+    padding-right: 2.5rem;
+}
+
+/* Checkbox Styles */
+.checkbox-group {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 0.75rem;
+    margin-top: 0.5rem;
+}
+
+.checkbox-label {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.875rem;
+    color: #374151;
+    cursor: pointer;
+}
+
+.checkbox-label input[type="checkbox"] {
+    width: 1rem;
+    height: 1rem;
+    accent-color: #4caf50;
+    cursor: pointer;
+}
+
+.toggle-group {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1rem;
+    background: #f9fafb;
+    border-radius: 0.5rem;
+    border: 1px solid #e5e7eb;
+    margin-bottom: 1.25rem;
+}
+
+/* Actions */
+.form-actions {
+    display: flex;
+    gap: 1rem;
+    margin-top: 2rem;
+    padding-top: 2rem;
+    border-top: 1px solid #e5e7eb;
+}
+
+.btn-back {
+    background: white;
+    color: #374151;
+    border: 1px solid #d1d5db;
+    flex: 1;
+}
+
+.btn-back:hover {
+    background: #f9fafb;
+    border-color: #9ca3af;
+}
+
+.btn-next {
+    background: #4caf50;
+    color: white;
+    flex: 2;
+}
+
+.btn-next:hover:not(:disabled) {
+    background: #43a047;
+}
+
+.btn-next:disabled {
+    background: #9ca3af;
+    cursor: not-allowed;
+}
+
+@media (max-width: 640px) {
+    .register-card {
+        padding: 2rem 1.5rem;
+    }
+
+    .role-grid {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+    }
+
+    .role-select-card {
+        flex-direction: row;
+        text-align: left;
+        padding: 1rem;
+    }
+
+    .role-icon {
+        margin-bottom: 0;
+        font-size: 2rem;
+    }
+
+    .form-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .checkbox-group {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .form-actions {
+        flex-direction: column-reverse;
+    }
+}

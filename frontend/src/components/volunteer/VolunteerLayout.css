@@ -1,0 +1,24 @@
+.volunteer-layout {
+  display: flex;
+  min-height: 100vh;
+  background-color: #f8fafc;
+}
+
+.layout-content {
+  flex: 1;
+  margin-left: 280px; /* Width of the Sidebar */
+  padding: 0;
+  transition: all 0.3s ease;
+}
+
+@media (max-width: 1024px) {
+  .layout-content {
+    margin-left: 80px; /* Collapsed Sidebar width */
+  }
+}
+
+@media (max-width: 768px) {
+  .layout-content {
+    margin-left: 0;
+  }
+}

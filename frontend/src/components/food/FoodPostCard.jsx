@@ -1,0 +1,1 @@
+// Food post card component

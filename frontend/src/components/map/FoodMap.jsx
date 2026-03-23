@@ -1,0 +1,1 @@
+// Food posts map component

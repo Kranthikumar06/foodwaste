@@ -1,0 +1,75 @@
+{
+  "groups": [
+    {
+      "name": "jwt",
+      "type": "com.example.backend.config.JwtProperties",
+      "sourceType": "com.example.backend.config.JwtProperties",
+      "description": "JWT token configuration properties for authentication"
+    },
+    {
+      "name": "cloudinary",
+      "type": "com.example.backend.config.CloudinaryProperties",
+      "sourceType": "com.example.backend.config.CloudinaryProperties",
+      "description": "Cloudinary image management service properties"
+    },
+    {
+      "name": "twilio",
+      "type": "com.example.backend.config.TwilioProperties",
+      "sourceType": "com.example.backend.config.TwilioProperties",
+      "description": "Twilio SMS/phone service properties"
+    },
+    {
+      "name": "firebase",
+      "type": "com.example.backend.config.FirebaseProperties",
+      "sourceType": "com.example.backend.config.FirebaseProperties",
+      "description": "Firebase service configuration properties"
+    }
+  ],
+  "properties": [
+    {
+      "name": "jwt.secret",
+      "type": "java.lang.String",
+      "description": "Secret key for JWT token signing and validation"
+    },
+    {
+      "name": "jwt.expiration",
+      "type": "java.lang.Long",
+      "description": "JWT token expiration time in milliseconds"
+    },
+    {
+      "name": "cloudinary.cloud-name",
+      "type": "java.lang.String",
+      "description": "Cloudinary cloud name for image service"
+    },
+    {
+      "name": "cloudinary.api-key",
+      "type": "java.lang.String",
+      "description": "Cloudinary API key for authentication"
+    },
+    {
+      "name": "cloudinary.api-secret",
+      "type": "java.lang.String",
+      "description": "Cloudinary API secret for authentication"
+    },
+    {
+      "name": "twilio.account-sid",
+      "type": "java.lang.String",
+      "description": "Twilio account SID for authentication"
+    },
+    {
+      "name": "twilio.auth-token",
+      "type": "java.lang.String",
+      "description": "Twilio authentication token"
+    },
+    {
+      "name": "twilio.phone-number",
+      "type": "java.lang.String",
+      "description": "Twilio phone number for sending SMS messages"
+    },
+    {
+      "name": "firebase.config-path",
+      "type": "java.lang.String",
+      "description": "Path to Firebase service account JSON configuration file"
+    }
+  ]
+}

@@ -1,0 +1,1 @@
+// Safety countdown timer component

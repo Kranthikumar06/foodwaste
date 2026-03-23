@@ -1,0 +1,90 @@
+.global-navbar {
+    position: sticky;
+    top: 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1.25rem 4rem;
+    background: rgba(255, 255, 255, 0.98);
+    /* Solid white base to stand out */
+    backdrop-filter: blur(10px);
+    z-index: 1000;
+    border-bottom: 1px solid rgba(76, 175, 80, 0.15);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+    /* Soft drop-shadow for highlighting */
+}
+
+.global-navbar .nav-brand {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-weight: 700;
+    font-size: 1.5rem;
+    color: #111827;
+    text-decoration: none;
+}
+
+.global-navbar .brand-icon {
+    color: #4caf50;
+    width: 28px;
+    height: 28px;
+}
+
+.global-navbar .nav-links {
+    display: flex;
+    gap: 2rem;
+}
+
+.global-navbar .nav-links a {
+    text-decoration: none;
+    color: #4b5563;
+    font-weight: 500;
+    transition: color 0.2s;
+}
+
+.global-navbar .nav-links a:hover {
+    color: #4caf50;
+}
+
+.global-navbar .nav-actions {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+}
+
+.global-navbar .nav-actions a {
+    text-decoration: none;
+    font-weight: 600;
+}
+
+.global-navbar .login-btn {
+    color: #111827;
+    transition: color 0.2s;
+}
+
+.global-navbar .login-btn:hover {
+    color: #4caf50;
+}
+
+.global-navbar .join-btn {
+    background-color: #4caf50;
+    color: white;
+    padding: 0.6rem 1.25rem;
+    border-radius: 0.5rem;
+    transition: background 0.2s, transform 0.1s;
+}
+
+.global-navbar .join-btn:hover {
+    background-color: #43a047;
+    transform: translateY(-1px);
+}
+
+@media (max-width: 768px) {
+    .global-navbar {
+        padding: 1.25rem 2rem;
+    }
+
+    .global-navbar .nav-links {
+        display: none;
+    }
+}

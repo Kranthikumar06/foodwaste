@@ -1,0 +1,25 @@
+.donor-layout {
+  display: flex;
+  min-height: 100vh;
+  background-color: #f8fafc;
+}
+
+.donor-main-area {
+  flex: 1;
+  margin-left: 280px;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+@media (max-width: 1024px) {
+  .donor-main-area {
+    margin-left: 80px;
+  }
+}
+
+.donor-container {
+  max-width: 1400px;
+  width: 100%;
+  margin: 0 auto;
+}

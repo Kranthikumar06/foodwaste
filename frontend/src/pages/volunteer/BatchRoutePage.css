@@ -1,0 +1,218 @@
+.batch-route-page {
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    background-color: #f4fdf6;
+    overflow: hidden;
+}
+
+.route-header {
+    padding: 1rem 2rem;
+    background: white;
+    border-bottom: 1px solid #e5e7eb;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    z-index: 1000;
+}
+
+.route-title {
+    font-size: 1.125rem;
+    font-weight: 800;
+    color: #111827;
+}
+
+.route-main {
+    display: flex;
+    flex: 1;
+    overflow: hidden;
+}
+
+.route-left-map {
+    flex: 1;
+    border-right: 1px solid #e5e7eb;
+}
+
+.route-right-stops {
+    width: 400px;
+    background: #f9fafb;
+    overflow-y: auto;
+    padding: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+}
+
+.stop-card {
+    background: white;
+    border-radius: 1rem;
+    padding: 1.25rem;
+    border: 1px solid #e5e7eb;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+    position: relative;
+    transition: .3s;
+}
+
+.stop-card.completed {
+    opacity: 0.6;
+    border-color: #dcfce7;
+    background: #f0fdf4;
+}
+
+.stop-badge {
+    position: absolute;
+    top: -0.75rem;
+    left: 1.25rem;
+    width: 28px;
+    height: 28px;
+    background: #111827;
+    color: white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 800;
+    font-size: 0.8125rem;
+    border: 3px solid #f9fafb;
+}
+
+.stop-card.completed .stop-badge {
+    background: #4caf50;
+}
+
+.stop-info h3 {
+    margin: 0 0 0.25rem 0;
+    font-size: 1rem;
+    font-weight: 700;
+    color: #111827;
+}
+
+.stop-info p {
+    margin: 0;
+    color: #6b7280;
+    font-size: 0.8125rem;
+}
+
+.stop-data {
+    display: flex;
+    gap: 1rem;
+    margin-top: 1rem;
+    padding: 0.75rem 0;
+    border-top: 1px solid #f3f4f6;
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: #374151;
+}
+
+.btn-arrived {
+    width: 100%;
+    background: #4caf50;
+    color: white;
+    border: none;
+    padding: 0.75rem;
+    border-radius: 0.5rem;
+    font-weight: 700;
+    cursor: pointer;
+    margin-top: 1rem;
+}
+
+.btn-arrived:hover {
+    background: #43a047;
+}
+
+.btn-arrived:disabled {
+    background: #d1d5db;
+    cursor: not-allowed;
+}
+
+/* Delivery Specific Card */
+.delivery-card {
+    background: #111827;
+    color: white;
+    border-color: #111827;
+}
+
+.delivery-card h3 {
+    color: white;
+}
+
+.btn-delivered {
+    background: #4caf50;
+    color: white;
+    margin-top: 1.5rem;
+}
+
+/* Progress Overlay */
+.route-progress-box {
+    padding: 1rem 1.5rem;
+    background: white;
+    border-top: 1px solid #e5e7eb;
+}
+
+.capacity-text {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.875rem;
+    font-weight: 700;
+    color: #4b5563;
+    margin-bottom: 0.5rem;
+}
+
+.capacity-bar {
+    height: 10px;
+    background: #e5e7eb;
+    border-radius: 5px;
+    overflow: hidden;
+}
+
+.capacity-fill {
+    height: 100%;
+    background: #4caf50;
+    transition: width 0.3s ease;
+}
+
+/* Modal for Completion */
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.6);
+    z-index: 2000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.modal-content {
+    background: white;
+    padding: 2.5rem;
+    border-radius: 1.5rem;
+    width: 100%;
+    max-width: 440px;
+    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+}
+
+.modal-content h2 {
+    margin-top: 0;
+    text-align: center;
+}
+
+@media (max-width: 1024px) {
+    .route-main {
+        flex-direction: column;
+    }
+
+    .route-left-map {
+        height: 350px;
+        flex: none;
+        border-right: none;
+        border-bottom: 1px solid #e5e7eb;
+    }
+
+    .route-right-stops {
+        width: 100%;
+        flex: 1;
+    }
+}
