@@ -15,10 +15,15 @@ import VolunteerProfilePage from './pages/volunteer/VolunteerProfilePage';
 import VolunteerLayout from './components/volunteer/VolunteerLayout';
 import DonorLayout from './components/donor/DonorLayout';
 
+// NGO
+import NgoLayout from './components/ngo/NgoLayout';
 import NgoDashboard from './pages/ngo/NgoDashboard';
-import AvailableFoodPage from './pages/ngo/AvailableFoodPage';
-import VolunteerManagePage from './pages/ngo/VolunteerManagePage';
-import DeliveriesPage from './pages/ngo/DeliveriesPage';
+import HungerSpotsPage from './pages/ngo/HungerSpotsPage';
+import NgoVolunteersPage from './pages/ngo/NgoVolunteersPage';
+import NgoReportsPage from './pages/ngo/NgoReportsPage';
+import NgoProfilePage from './pages/ngo/NgoProfilePage';
+
+// Admin
 import AdminDashboard from './pages/admin/AdminDashboard';
 import UserVerificationPage from './pages/admin/UserVerificationPage';
 import PostsModerationPage from './pages/admin/PostsModerationPage';
@@ -68,44 +73,27 @@ function App() {
         } />
 
         {/* NGO Routes */}
-        <Route 
-          path="/ngo/dashboard" 
-          element={<ProtectedRoute role="NGO"><NgoDashboard /></ProtectedRoute>} 
-        />
-        <Route 
-          path="/ngo/food" 
-          element={<ProtectedRoute role="NGO"><AvailableFoodPage /></ProtectedRoute>} 
-        />
-        <Route 
-          path="/ngo/volunteers" 
-          element={<ProtectedRoute role="NGO"><VolunteerManagePage /></ProtectedRoute>} 
-        />
-        <Route 
-          path="/ngo/deliveries" 
-          element={<ProtectedRoute role="NGO"><DeliveriesPage /></ProtectedRoute>} 
-        />
+        <Route path="/ngo/*" element={
+          <ProtectedRoute role="NGO">
+            <NgoLayout>
+              <Routes>
+                <Route path="dashboard"  element={<NgoDashboard />} />
+                <Route path="spots"      element={<HungerSpotsPage />} />
+                <Route path="volunteers" element={<NgoVolunteersPage />} />
+                <Route path="reports"    element={<NgoReportsPage />} />
+                <Route path="profile"    element={<NgoProfilePage />} />
+                <Route path="*"          element={<Navigate to="dashboard" replace />} />
+              </Routes>
+            </NgoLayout>
+          </ProtectedRoute>
+        } />
 
         {/* Admin Routes */}
-        <Route 
-          path="/admin/dashboard" 
-          element={<ProtectedRoute role="ADMIN"><AdminDashboard /></ProtectedRoute>} 
-        />
-        <Route 
-          path="/admin/users" 
-          element={<ProtectedRoute role="ADMIN"><UserVerificationPage /></ProtectedRoute>} 
-        />
-        <Route 
-          path="/admin/posts" 
-          element={<ProtectedRoute role="ADMIN"><PostsModerationPage /></ProtectedRoute>} 
-        />
-        <Route 
-          path="/admin/analytics" 
-          element={<ProtectedRoute role="ADMIN"><AnalyticsPage /></ProtectedRoute>} 
-        />
-        <Route 
-          path="/admin/emergency" 
-          element={<ProtectedRoute role="ADMIN"><EmergencyConsolePage /></ProtectedRoute>} 
-        />
+        <Route path="/admin/dashboard" element={<ProtectedRoute role="ADMIN"><AdminDashboard /></ProtectedRoute>} />
+        <Route path="/admin/users"     element={<ProtectedRoute role="ADMIN"><UserVerificationPage /></ProtectedRoute>} />
+        <Route path="/admin/posts"     element={<ProtectedRoute role="ADMIN"><PostsModerationPage /></ProtectedRoute>} />
+        <Route path="/admin/analytics" element={<ProtectedRoute role="ADMIN"><AnalyticsPage /></ProtectedRoute>} />
+        <Route path="/admin/emergency" element={<ProtectedRoute role="ADMIN"><EmergencyConsolePage /></ProtectedRoute>} />
 
         {/* Fallback */}
         <Route path="*" element={<Navigate to="/" replace />} />

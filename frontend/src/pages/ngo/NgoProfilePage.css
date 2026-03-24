@@ -1,0 +1,146 @@
+/* ===========================
+   NGO PROFILE PAGE
+   =========================== */
+
+.ngo-profile-page {
+  padding: 2.5rem 2rem;
+  min-height: 100vh;
+  max-width: 900px;
+}
+
+.ngo-page-header { margin-bottom: 1.75rem; }
+.ngo-page-header h1 { font-size: 1.875rem; font-weight: 800; color: #0f172a; margin: 0 0 0.3rem; letter-spacing: -0.03em; }
+.ngo-subtitle { color: #64748b; font-size: 0.9rem; font-weight: 500; margin: 0; }
+
+/* Cards */
+.ngo-card { background: white; border-radius: 1.5rem; padding: 1.75rem; margin-bottom: 1.5rem; box-shadow: 0 2px 8px rgba(0,0,0,0.06); border: 1px solid rgba(226,232,240,0.6); }
+.ngo-card-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem; }
+.ngo-card-header h2 { font-size: 1rem; font-weight: 800; color: #0f172a; margin: 0; display: flex; align-items: center; gap: 0.5rem; }
+
+.save-toast {
+  display: flex; align-items: center; gap: 0.35rem;
+  font-size: 0.8rem; font-weight: 800; color: #059669;
+  background: #f0fdf4; padding: 0.35rem 0.85rem;
+  border-radius: 2rem;
+  animation: fadeIn 0.3s ease;
+}
+
+@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+/* Logo row */
+.profile-logo-row { display: flex; align-items: center; gap: 1.5rem; margin-bottom: 1.75rem; }
+
+.profile-logo-placeholder {
+  width: 72px; height: 72px;
+  background: linear-gradient(135deg, #10b981, #059669);
+  border-radius: 1.25rem;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.5rem; font-weight: 900; color: white;
+  flex-shrink: 0;
+  box-shadow: 0 6px 16px rgba(16,185,129,0.35);
+}
+
+.upload-logo-btn { display: flex; align-items: center; gap: 0.4rem; background: #f0fdf4; border: 1.5px solid #a7f3d0; color: #10b981; padding: 0.6rem 1rem; border-radius: 0.75rem; font-weight: 700; font-size: 0.85rem; cursor: pointer; transition: all 0.2s; }
+.upload-logo-btn:hover { background: #10b981; color: white; border-color: transparent; }
+.upload-hint { font-size: 0.75rem; color: #94a3b8; margin-top: 0.3rem; }
+
+/* Profile form */
+.profile-form { display: flex; flex-direction: column; gap: 1.1rem; }
+
+.form-row-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+
+.form-field { display: flex; flex-direction: column; gap: 0.45rem; }
+.form-field label { font-size: 0.75rem; font-weight: 700; color: #475569; text-transform: uppercase; letter-spacing: 0.05em; }
+.form-field input {
+  background: #f8fafc; border: 1.5px solid #e2e8f0;
+  border-radius: 0.875rem; padding: 0.875rem 1rem;
+  font-size: 0.9rem; color: #0f172a; font-weight: 500;
+  font-family: 'Inter', sans-serif; transition: all 0.2s;
+}
+.form-field input:focus { outline: none; border-color: #10b981; background: white; box-shadow: 0 0 0 4px rgba(16,185,129,0.1); }
+
+.ngo-primary-btn {
+  background: linear-gradient(135deg, #10b981, #059669);
+  color: white; padding: 0.875rem 1.75rem;
+  border-radius: 0.875rem; border: none;
+  font-weight: 700; font-size: 0.9rem;
+  display: flex; align-items: center; gap: 0.5rem;
+  cursor: pointer; transition: all 0.3s;
+  box-shadow: 0 4px 14px rgba(16,185,129,0.4);
+  width: fit-content;
+}
+.ngo-primary-btn:hover { transform: translateY(-2px); box-shadow: 0 8px 22px rgba(16,185,129,0.5); }
+.save-btn { margin-top: 0.5rem; }
+
+/* Notifications */
+.notif-list { display: flex; flex-direction: column; gap: 0; }
+
+.notif-row {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 1.25rem 0;
+  border-bottom: 1px solid #f1f5f9;
+  gap: 1rem;
+}
+.notif-row:last-child { border-bottom: none; }
+
+.notif-text { display: flex; flex-direction: column; gap: 0.2rem; }
+.notif-label { font-size: 0.9rem; font-weight: 700; color: #0f172a; }
+.notif-desc { font-size: 0.78rem; color: #64748b; font-weight: 500; max-width: 500px; }
+
+/* Toggle switch */
+.toggle-switch { position: relative; flex-shrink: 0; }
+.toggle-switch input { opacity: 0; width: 0; height: 0; position: absolute; }
+.toggle-track {
+  display: block; width: 48px; height: 26px;
+  background: #e2e8f0; border-radius: 13px;
+  cursor: pointer; transition: background 0.3s;
+  position: relative;
+}
+.toggle-track::after {
+  content: ''; position: absolute;
+  width: 20px; height: 20px; background: white;
+  border-radius: 50%; top: 3px; left: 3px;
+  transition: left 0.3s; box-shadow: 0 2px 4px rgba(0,0,0,0.15);
+}
+.toggle-switch input:checked + .toggle-track { background: #10b981; }
+.toggle-switch input:checked + .toggle-track::after { left: 25px; }
+
+/* Account actions */
+.account-actions { display: flex; flex-direction: column; gap: 0.5rem; }
+
+.account-action-item {
+  display: flex; align-items: center; gap: 0.875rem;
+  padding: 1.1rem 1.25rem;
+  border: none; background: #f8fafc;
+  border-radius: 1rem; cursor: pointer;
+  color: #475569; font-size: 0.9rem; font-weight: 700;
+  text-align: left; transition: all 0.2s; width: 100%;
+}
+.account-action-item span { flex: 1; }
+.account-action-item:hover { background: #f0fdf4; color: #10b981; }
+.account-action-item:hover .chevron-icon { color: #10b981; }
+
+.logout-item:hover { background: #fef2f2; color: #ef4444; }
+.logout-item:hover .chevron-icon { color: #ef4444; }
+.chevron-icon { color: #cbd5e1; }
+
+/* Password form */
+.pwd-form {
+  display: flex; flex-direction: column; gap: 1rem;
+  padding: 1.25rem;
+  background: #f8fafc; border-radius: 1rem;
+  animation: slideDown 0.25s ease;
+}
+
+@keyframes slideDown { from { opacity: 0; transform: translateY(-6px); } to { opacity: 1; transform: translateY(0); } }
+
+.pwd-input-wrap { position: relative; }
+.pwd-input-wrap input { width: 100%; background: white; border: 1.5px solid #e2e8f0; border-radius: 0.875rem; padding: 0.875rem 3rem 0.875rem 1rem; font-size: 0.9rem; color: #0f172a; font-weight: 500; font-family: 'Inter', sans-serif; }
+.pwd-input-wrap input:focus { outline: none; border-color: #10b981; box-shadow: 0 0 0 4px rgba(16,185,129,0.1); }
+.eye-btn { position: absolute; right: 1rem; top: 50%; transform: translateY(-50%); background: none; border: none; color: #94a3b8; cursor: pointer; transition: color 0.2s; }
+.eye-btn:hover { color: #10b981; }
+
+@media (max-width: 600px) {
+  .ngo-profile-page { padding: 1.5rem; }
+  .form-row-2 { grid-template-columns: 1fr; }
+}

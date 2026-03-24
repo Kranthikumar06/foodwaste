@@ -1,0 +1,475 @@
+/* ===========================
+   NGO DASHBOARD — Premium
+   =========================== */
+
+.ngo-dashboard {
+  padding: 2.5rem 2rem;
+  min-height: 100vh;
+}
+
+/* ---- Header ---- */
+.ngo-page-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 2rem;
+}
+
+.ngo-org-name-row {
+  display: flex;
+  align-items: center;
+  gap: 0.875rem;
+  margin-bottom: 0.4rem;
+  flex-wrap: wrap;
+}
+
+.ngo-page-header h1 {
+  font-size: 1.875rem;
+  font-weight: 800;
+  color: #0f172a;
+  letter-spacing: -0.03em;
+  margin: 0;
+}
+
+.verified-badge-ngo {
+  background: linear-gradient(135deg, #f0fdf4, #d1fae5);
+  color: #10b981;
+  font-size: 0.72rem;
+  font-weight: 800;
+  padding: 0.3rem 0.7rem;
+  border-radius: 2rem;
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+  letter-spacing: 0.03em;
+}
+
+.ngo-header-sub {
+  color: #64748b;
+  font-size: 0.875rem;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+}
+
+.ngo-primary-btn {
+  background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+  color: white;
+  padding: 0.8rem 1.5rem;
+  border-radius: 0.875rem;
+  border: none;
+  font-weight: 700;
+  font-size: 0.9rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 14px rgba(16, 185, 129, 0.4);
+  white-space: nowrap;
+}
+
+.ngo-primary-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(16, 185, 129, 0.5);
+}
+
+/* ---- Stats Grid ---- */
+.ngo-stats-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1.25rem;
+  margin-bottom: 1.75rem;
+}
+
+.ngo-stat-card {
+  background: white;
+  padding: 1.4rem;
+  border-radius: 1.25rem;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+  border: 1px solid rgba(226, 232, 240, 0.6);
+  transition: all 0.3s ease;
+}
+
+.ngo-stat-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 10px 24px rgba(0,0,0,0.09);
+}
+
+.ngo-stat-icon {
+  width: 50px;
+  height: 50px;
+  border-radius: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.ngo-stat-body {
+  display: flex;
+  flex-direction: column;
+}
+
+.ngo-stat-label {
+  font-size: 0.68rem;
+  font-weight: 700;
+  color: #94a3b8;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  margin-bottom: 0.25rem;
+}
+
+.ngo-stat-value {
+  font-size: 1.625rem;
+  font-weight: 800;
+  color: #0f172a;
+  letter-spacing: -0.03em;
+  line-height: 1;
+}
+
+/* ---- Main Grid ---- */
+.ngo-main-grid {
+  display: grid;
+  grid-template-columns: 1.5fr 1fr;
+  gap: 1.5rem;
+}
+
+.ngo-col-left, .ngo-col-right {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+/* ---- Card ---- */
+.ngo-card {
+  background: white;
+  border-radius: 1.5rem;
+  padding: 1.75rem;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+  border: 1px solid rgba(226, 232, 240, 0.6);
+  transition: box-shadow 0.3s ease;
+}
+
+.ngo-card:hover { box-shadow: 0 8px 24px rgba(0,0,0,0.08); }
+
+.ngo-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.25rem;
+}
+
+.ngo-card-header h2 {
+  font-size: 1rem;
+  font-weight: 800;
+  color: #0f172a;
+  margin: 0;
+  letter-spacing: -0.01em;
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.ngo-text-btn {
+  background: none;
+  border: none;
+  color: #10b981;
+  font-size: 0.8rem;
+  font-weight: 700;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 0.2rem;
+  transition: color 0.2s;
+}
+.ngo-text-btn:hover { color: #059669; }
+
+/* ---- Spot Status ---- */
+.spot-status-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.625rem;
+}
+
+.spot-status-row {
+  display: flex;
+  align-items: center;
+  gap: 0.875rem;
+  padding: 0.875rem 1rem;
+  border-radius: 0.875rem;
+  background: #f8fafc;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  border: 1px solid transparent;
+}
+
+.spot-status-row:hover {
+  background: white;
+  border-color: #e2e8f0;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+}
+
+.spot-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.spot-row-info { flex: 1; }
+
+.spot-row-name {
+  display: block;
+  font-weight: 700;
+  color: #0f172a;
+  font-size: 0.9rem;
+}
+
+.spot-row-area {
+  display: block;
+  font-size: 0.75rem;
+  color: #94a3b8;
+  font-weight: 500;
+  margin-top: 0.1rem;
+}
+
+.spot-row-pill {
+  font-size: 0.68rem;
+  font-weight: 800;
+  padding: 0.25rem 0.65rem;
+  border-radius: 2rem;
+  white-space: nowrap;
+  letter-spacing: 0.02em;
+}
+
+/* ---- Live Badge ---- */
+.live-badge {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+  font-size: 0.65rem;
+  font-weight: 900;
+  color: #ef4444;
+  letter-spacing: 0.12em;
+}
+
+.pulse-dot {
+  animation: pulse-red 1.5s infinite;
+  fill: #ef4444;
+}
+
+@keyframes pulse-red {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.3; }
+}
+
+/* ---- Live Delivery ---- */
+.live-delivery-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.875rem;
+}
+
+.live-delivery-row {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 1rem;
+  background: #f8fafc;
+  border-radius: 1rem;
+  border: 1px solid transparent;
+  transition: all 0.2s;
+}
+
+.live-delivery-row:hover {
+  background: white;
+  border-color: #e2e8f0;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+}
+
+.ld-avatar {
+  width: 40px;
+  height: 40px;
+  background: linear-gradient(135deg, #10b981, #059669);
+  border-radius: 50%;
+  color: white;
+  font-weight: 800;
+  font-size: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.ld-info {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+}
+
+.ld-name {
+  font-weight: 700;
+  color: #0f172a;
+  font-size: 0.9rem;
+}
+
+.ld-transport { font-size: 0.8rem; color: #64748b; font-weight: 500; margin-left: 0.35rem; }
+.ld-dest, .ld-food { font-size: 0.78rem; color: #64748b; font-weight: 500; }
+
+.ld-eta {
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+  font-size: 0.78rem;
+  font-weight: 800;
+  color: #10b981;
+  background: #f0fdf4;
+  padding: 0.3rem 0.65rem;
+  border-radius: 2rem;
+  white-space: nowrap;
+}
+
+/* ---- AI Forecast Card ---- */
+.ai-forecast-card {
+  background: linear-gradient(145deg, #0f172a, #1e293b);
+  color: white;
+  position: relative;
+  overflow: hidden;
+}
+
+.ai-forecast-card::before {
+  content: '';
+  position: absolute;
+  top: -60px; right: -60px;
+  width: 200px; height: 200px;
+  background: radial-gradient(circle, rgba(16,185,129,0.2) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+.ai-forecast-card .ngo-card-header h2 { color: white; }
+.ai-forecast-card .ngo-text-btn { color: #34d399; }
+
+.zap-icon { color: #fbbf24; }
+
+.forecast-hero {
+  display: flex;
+  align-items: baseline;
+  gap: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.forecast-number {
+  font-size: 3rem;
+  font-weight: 900;
+  color: #34d399;
+  letter-spacing: -0.04em;
+}
+
+.forecast-unit {
+  font-size: 0.875rem;
+  color: #64748b;
+  font-weight: 600;
+}
+
+.forecast-sub {
+  font-size: 0.875rem;
+  color: #94a3b8;
+  font-weight: 500;
+  margin-bottom: 1.25rem;
+  line-height: 1.6;
+}
+
+.forecast-sub strong { color: white; }
+
+.forecast-chart-wrap {
+  height: 120px;
+  margin-bottom: 1.25rem;
+}
+
+.forecast-insight {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: #94a3b8;
+  background: rgba(255,255,255,0.06);
+  padding: 0.75rem 1rem;
+  border-radius: 0.75rem;
+}
+
+.forecast-insight strong { color: #fbbf24; }
+.forecast-insight svg { color: #10b981; flex-shrink: 0; }
+
+/* ---- Activity Feed ---- */
+.activity-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.activity-row {
+  display: flex;
+  align-items: center;
+  gap: 0.875rem;
+  padding: 0.875rem 0;
+  border-bottom: 1px solid #f1f5f9;
+}
+
+.activity-row:last-child { border-bottom: none; }
+
+.act-date {
+  font-size: 0.7rem;
+  font-weight: 800;
+  color: #94a3b8;
+  background: #f1f5f9;
+  padding: 0.35rem 0.5rem;
+  border-radius: 0.5rem;
+  min-width: 50px;
+  text-align: center;
+}
+
+.act-details {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 0.1rem;
+}
+
+.act-food { font-size: 0.875rem; font-weight: 700; color: #0f172a; }
+.act-vol { font-size: 0.75rem; color: #64748b; font-weight: 500; }
+
+.act-meals {
+  font-size: 0.8rem;
+  font-weight: 800;
+  color: #10b981;
+  background: #f0fdf4;
+  padding: 0.25rem 0.6rem;
+  border-radius: 2rem;
+  white-space: nowrap;
+}
+
+.ngo-empty-state {
+  text-align: center;
+  padding: 2rem;
+  color: #94a3b8;
+  font-size: 0.9rem;
+  font-weight: 500;
+}
+
+@media (max-width: 1280px) {
+  .ngo-main-grid { grid-template-columns: 1fr; }
+  .ngo-stats-grid { grid-template-columns: repeat(2, 1fr); }
+}
+
+@media (max-width: 768px) {
+  .ngo-dashboard { padding: 1.5rem; }
+  .ngo-page-header { flex-direction: column; gap: 1rem; }
+  .ngo-stats-grid { grid-template-columns: repeat(2, 1fr); }
+}
