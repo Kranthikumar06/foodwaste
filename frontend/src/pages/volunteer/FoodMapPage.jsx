@@ -67,6 +67,7 @@ const getMarkerIcon = (priority) => {
 const UserLocationMarker = () => {
   return L.divIcon({
     className: 'user-marker-pulse',
+    html: '<div style="width: 12px; height: 12px; background: #3b82f6; border-radius: 50%; border: 3px solid white; box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.3);"></div>',
     iconSize: [20, 20],
     iconAnchor: [10, 10]
   });
@@ -79,10 +80,53 @@ export default function FoodMapPage() {
   const [batch, setBatch] = useState([]);
   const [isOnline, setIsOnline] = useState(true);
   const [foodPosts, setFoodPosts] = useState([]);
+  const [userLocation, setUserLocation] = useState(HYDERABAD_CENTER);
+  const [locationAccuracy, setLocationAccuracy] = useState(null);
+  const watchIdRef = React.useRef(null);
 
   React.useEffect(() => {
     fetchPosts();
+    detectUserLocation();
+    
+    return () => {
+      // Cleanup: stop watching location when component unmounts
+      if (watchIdRef.current) {
+        navigator.geolocation.clearWatch(watchIdRef.current);
+      }
+    };
   }, []);
+
+  const detectUserLocation = () => {
+    if (navigator.geolocation) {
+      // Use watchPosition for continuous updates (more accurate)
+      watchIdRef.current = navigator.geolocation.watchPosition(
+        (position) => {
+          const { latitude, longitude, accuracy } = position.coords;
+          console.log(`Location updated: ${latitude}, ${longitude}, Accuracy: ${accuracy}m`);
+          setUserLocation([latitude, longitude]);
+          setLocationAccuracy(Math.round(accuracy));
+        },
+        (error) => {
+          console.error('Geolocation error:', error.code, error.message);
+          if (error.code === 1) {
+            alert('Location access denied. Please enable location permissions in your browser settings.');
+          } else if (error.code === 3) {
+            alert('Location request timed out. Please try again.');
+          }
+          setUserLocation(HYDERABAD_CENTER);
+        },
+        {
+          enableHighAccuracy: true,
+          timeout: 30000,
+          maximumAge: 0
+        }
+      );
+    } else {
+      console.warn('Geolocation not supported');
+      alert('Your browser does not support geolocation.');
+      setUserLocation(HYDERABAD_CENTER);
+    }
+  };
 
   const fetchPosts = async () => {
     try {
@@ -146,6 +190,28 @@ export default function FoodMapPage() {
             <Filter size={16} /> Filters
           </div>
 
+          <button 
+            onClick={detectUserLocation}
+            style={{
+              display: 'flex',
+              alignItems: 'center',
+              gap: '0.5rem',
+              padding: '0.5rem 1rem',
+              backgroundColor: locationAccuracy && locationAccuracy > 50 ? '#f97316' : '#4caf50',
+              color: 'white',
+              border: 'none',
+              borderRadius: '0.5rem',
+              cursor: 'pointer',
+              fontSize: '0.875rem',
+              fontWeight: 600,
+              transition: 'background-color 0.3s'
+            }}
+            title={locationAccuracy ? `Accuracy: ${locationAccuracy}m` : "Getting your location..."}
+          >
+            <MapPin size={16} /> 
+            {locationAccuracy ? `My Location (${locationAccuracy}m)` : 'My Location'}
+          </button>
+
           <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
             <span style={{ fontSize: '0.75rem', fontWeight: 800, color: '#6b7280' }}>STATUS</span>
             <label className="toggle-switch" style={{ transform: 'scale(0.8)' }}>
@@ -164,14 +230,14 @@ export default function FoodMapPage() {
 
       <div className="map-main-container">
         {view === 'map' ? (
-          <MapContainer center={HYDERABAD_CENTER} zoom={13} zoomControl={false} scrollWheelZoom={true}>
+          <MapContainer center={userLocation} zoom={13} zoomControl={false} scrollWheelZoom={true}>
             <TileLayer
               attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
               url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
             />
 
             {/* User Blue Dot */}
-            <Marker position={[17.43, 78.38]} icon={UserLocationMarker()} />
+            <Marker position={userLocation} icon={UserLocationMarker()} />
 
             {MOCK_FOOD_POSTS.map(post => (
               <Marker

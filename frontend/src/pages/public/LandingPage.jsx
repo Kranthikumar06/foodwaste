@@ -26,7 +26,7 @@ const LandingPage = () => {
           </h1>
 
           <p className="hero-subtitle">
-            NourishNet connects surplus food from donors to those in need, efficiently and on time.
+            FoodWaste connects surplus food from donors to those in need, efficiently and on time.
           </p>
 
           <div className="hero-actions">
@@ -112,7 +112,7 @@ const LandingPage = () => {
       {/* 5. Features Grid */}
       <section className="section">
         <div className="section-inner">
-          <h2 className="section-title">Why NourishNet?</h2>
+          <h2 className="section-title">Why FoodWaste?</h2>
           <div className="features-grid">
             <div className="feature-tile">
               <Zap className="feature-icon" />
@@ -168,21 +168,21 @@ const LandingPage = () => {
               <h3>Donor</h3>
               <div className="role-subtitle">Restaurants • Caterers • Events</div>
               <p>Turn your excess high-quality food into meals for the hungry instead of waste.</p>
-              <button className="role-btn">Register as Donor</button>
+              <Link to="/register?role=donor" className="role-btn">Register as Donor</Link>
             </div>
             <div className="role-card">
               <HeartHandshake className="role-icon" />
               <h3>Volunteer</h3>
               <div className="role-subtitle">Individuals • Students • Fleets</div>
               <p>Use your free time and vehicle to transport food and save lives locally.</p>
-              <button className="role-btn">Become a Volunteer</button>
+              <Link to="/register?role=volunteer" className="role-btn">Become a Volunteer</Link>
             </div>
             <div className="role-card">
               <Users className="role-icon" />
               <h3>NGO Partner</h3>
               <div className="role-subtitle">Shelters • Orphanages • Slum Groups</div>
               <p>Get reliable access to fresh surplus food delivered straight to your community.</p>
-              <button className="role-btn">Partner with Us</button>
+              <Link to="/register?role=ngo" className="role-btn">Partner with Us</Link>
             </div>
           </div>
         </div>
@@ -206,26 +206,13 @@ const LandingPage = () => {
         </div>
       </section>
 
-      {/* 8. Final CTA */}
-      <section className="final-cta bg-green">
-        <h2>Every meal rescued is a story changed.</h2>
-        <div className="final-cta-actions">
-          <Link to="/register" className="primary-btn">
-            Get Started Free
-          </Link>
-          <a href="#how-it-works" className="secondary-btn">
-            See Our Impact
-          </a>
-        </div>
-      </section>
-
-      {/* 9. Footer */}
+      {/* 8. Footer */}
       <footer className="footer">
         <div className="footer-top">
           <div className="footer-brand">
             <Link to="/" className="nav-brand">
               <Leaf className="brand-icon" />
-              <span>NourishNet</span>
+              <span>FoodWaste</span>
             </Link>
             <div className="footer-tagline">Bridging the gap between surplus and need.</div>
           </div>
@@ -237,7 +224,7 @@ const LandingPage = () => {
           </div>
         </div>
         <div className="footer-bottom">
-          © {new Date().getFullYear()} NourishNet. All rights reserved.
+          © {new Date().getFullYear()} FoodWaste. All rights reserved.
         </div>
       </footer>
     </div>

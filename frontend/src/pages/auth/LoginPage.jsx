@@ -46,7 +46,13 @@ export default function LoginPage() {
       }
     } catch (err) {
       if (err.response && err.response.data) {
-        setError(err.response.data.message || 'Login failed.');
+        const message = err.response.data.message || 'Login failed.';
+        // User-friendly error messages
+        if (message.includes('Bad credentials') || message.includes('Invalid')) {
+          setError('Invalid email or password. Please try again.');
+        } else {
+          setError(message);
+        }
       } else {
         setError('Network error. Please try again.');
       }

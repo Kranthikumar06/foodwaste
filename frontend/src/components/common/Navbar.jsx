@@ -11,7 +11,7 @@ const Navbar = () => {
         <nav className="global-navbar">
             <Link to="/" className="nav-brand">
                 <Leaf className="brand-icon" />
-                <span>NourishNet</span>
+                <span>FoodWaste</span>
             </Link>
 
             {!isAuthPage && (

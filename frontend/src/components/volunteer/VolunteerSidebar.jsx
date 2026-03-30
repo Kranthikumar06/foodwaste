@@ -32,8 +32,8 @@ export default function VolunteerSidebar() {
   return (
     <aside className="volunteer-sidebar">
       <div className="sidebar-brand">
-        <div className="brand-logo">N</div>
-        <span>NourishNet</span>
+        <div className="brand-logo">F</div>
+        <span>FoodWaste</span>
       </div>
 
       <nav className="sidebar-nav">
