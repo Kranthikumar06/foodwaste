@@ -9,6 +9,7 @@ import {
   LogOut,
   ChevronRight,
   ShieldCheck,
+  Leaf,
 } from 'lucide-react';
 import { useDispatch } from 'react-redux';
 import { logout } from '../../store/authSlice';
@@ -34,9 +35,7 @@ export default function NgoSidebar() {
   return (
     <aside className="ngo-sidebar">
       <div className="ngo-brand">
-        <div className="ngo-brand-logo">
-          <ShieldCheck size={22} />
-        </div>
+        <Leaf size={32} className="brand-icon" />
         <div className="ngo-brand-text">
           <span className="ngo-brand-name">NGO Portal</span>
           <span className="ngo-brand-sub">Food Rescue HQ</span>

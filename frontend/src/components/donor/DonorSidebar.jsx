@@ -7,7 +7,8 @@ import {
   TrendingUp, 
   LogOut,
   ChevronRight,
-  User 
+  User,
+  Leaf 
 } from 'lucide-react';
 import { useDispatch } from 'react-redux';
 import { logout } from '../../store/authSlice';
@@ -32,7 +33,7 @@ export default function DonorSidebar() {
   return (
     <aside className="donor-sidebar">
       <div className="sidebar-brand">
-        <div className="brand-logo donor-brand">D</div>
+        <Leaf size={32} className="brand-icon" />
         <span>Donor Portal</span>
       </div>
 

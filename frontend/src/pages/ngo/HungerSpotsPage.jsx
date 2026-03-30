@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { MapContainer, TileLayer, Marker, Popup, useMap } from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
 import L from 'leaflet';
@@ -7,6 +7,7 @@ import {
   MapPin, Users, Clock, PhoneCall, Utensils,
   ShieldOff, Eye, ChevronRight, ToggleRight
 } from 'lucide-react';
+import { useGeolocation } from '../../hooks/useGeolocation';
 import './HungerSpotsPage.css';
 
 // Fix leaflet icons
@@ -36,7 +37,17 @@ const EMPTY_FORM = {
   bestFrom: '', bestTo: '', contact: '', phone: '', notes: '', active: true
 };
 
+// Component to update map center when location changes
+const MapCenterUpdater = ({ center }) => {
+  const map = useMap();
+  React.useEffect(() => {
+    map.setView(center, 13);
+  }, [center, map]);
+  return null;
+};
+
 export default function HungerSpotsPage() {
+  const { location: detectedLocation } = useGeolocation();
   const [viewMode, setViewMode] = useState('map');
   const [selectedSpot, setSelectedSpot] = useState(null);
   const [showModal, setShowModal] = useState(false);
@@ -84,8 +95,21 @@ export default function HungerSpotsPage() {
       {viewMode === 'map' && (
         <div className="map-spots-wrap">
           <div className={`spots-map-container ${selectedSpot ? 'with-panel' : ''}`}>
-            <MapContainer center={[17.465, 78.38]} zoom={13} style={{ height: '100%', width: '100%' }}>
+            <MapContainer center={detectedLocation} zoom={13} style={{ height: '100%', width: '100%' }}>
+              <MapCenterUpdater center={detectedLocation} />
               <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
+              {/* User Location Marker - Red Pin */}
+              <Marker
+                position={detectedLocation}
+                icon={L.icon({
+                  iconUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-red.png',
+                  shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png',
+                  iconSize: [25, 41],
+                  iconAnchor: [12, 41],
+                  popupAnchor: [1, -34],
+                  shadowSize: [41, 41]
+                })}
+              />
               {SPOTS.map(spot => (
                 <Marker
                   key={spot.id}

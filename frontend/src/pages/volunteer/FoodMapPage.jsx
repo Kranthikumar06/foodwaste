@@ -18,6 +18,7 @@ import {
   TrendingUp,
   Activity
 } from 'lucide-react';
+import { useGeolocation } from '../../hooks/useGeolocation';
 import {
   getFoodPosts,
   claimFoodPost,
@@ -65,68 +66,38 @@ const getMarkerIcon = (priority) => {
 };
 
 const UserLocationMarker = () => {
-  return L.divIcon({
-    className: 'user-marker-pulse',
-    html: '<div style="width: 12px; height: 12px; background: #3b82f6; border-radius: 50%; border: 3px solid white; box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.3);"></div>',
-    iconSize: [20, 20],
-    iconAnchor: [10, 10]
+  return L.icon({
+    iconUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-red.png',
+    shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png',
+    iconSize: [25, 41],
+    iconAnchor: [12, 41],
+    popupAnchor: [1, -34],
+    shadowSize: [41, 41]
   });
+};
+
+// Component to update map center when location changes
+const MapCenterUpdater = ({ center }) => {
+  const map = useMap();
+  React.useEffect(() => {
+    map.setView(center, 15);
+  }, [center, map]);
+  return null;
 };
 
 export default function FoodMapPage() {
   const navigate = useNavigate();
+  const { location: userLocation, accuracy: locationAccuracy, loading: locationLoading, error: locationError } = useGeolocation();
   const [view, setView] = useState('map');
   const [selectedPost, setSelectedPost] = useState(null);
   const [batch, setBatch] = useState([]);
   const [isOnline, setIsOnline] = useState(true);
   const [foodPosts, setFoodPosts] = useState([]);
-  const [userLocation, setUserLocation] = useState(HYDERABAD_CENTER);
-  const [locationAccuracy, setLocationAccuracy] = useState(null);
-  const watchIdRef = React.useRef(null);
 
   React.useEffect(() => {
     fetchPosts();
-    detectUserLocation();
-    
-    return () => {
-      // Cleanup: stop watching location when component unmounts
-      if (watchIdRef.current) {
-        navigator.geolocation.clearWatch(watchIdRef.current);
-      }
-    };
   }, []);
 
-  const detectUserLocation = () => {
-    if (navigator.geolocation) {
-      // Use watchPosition for continuous updates (more accurate)
-      watchIdRef.current = navigator.geolocation.watchPosition(
-        (position) => {
-          const { latitude, longitude, accuracy } = position.coords;
-          console.log(`Location updated: ${latitude}, ${longitude}, Accuracy: ${accuracy}m`);
-          setUserLocation([latitude, longitude]);
-          setLocationAccuracy(Math.round(accuracy));
-        },
-        (error) => {
-          console.error('Geolocation error:', error.code, error.message);
-          if (error.code === 1) {
-            alert('Location access denied. Please enable location permissions in your browser settings.');
-          } else if (error.code === 3) {
-            alert('Location request timed out. Please try again.');
-          }
-          setUserLocation(HYDERABAD_CENTER);
-        },
-        {
-          enableHighAccuracy: true,
-          timeout: 30000,
-          maximumAge: 0
-        }
-      );
-    } else {
-      console.warn('Geolocation not supported');
-      alert('Your browser does not support geolocation.');
-      setUserLocation(HYDERABAD_CENTER);
-    }
-  };
 
   const fetchPosts = async () => {
     try {
@@ -166,6 +137,23 @@ export default function FoodMapPage() {
 
   const batchWeight = batch.reduce((acc, curr) => acc + parseInt(curr.quantity || 0), 0);
 
+  // Manual location detection function
+  const detectUserLocation = () => {
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(
+        (position) => {
+          const { latitude, longitude } = position.coords;
+          console.log(`Manual location detection: ${latitude}, ${longitude}`);
+          // The useGeolocation hook will also update this
+        },
+        (error) => {
+          console.error('Location error:', error);
+          alert('Could not get your location. Please enable location access.');
+        }
+      );
+    }
+  };
+
   return (
     <div className="food-map-page">
 
@@ -190,27 +178,38 @@ export default function FoodMapPage() {
             <Filter size={16} /> Filters
           </div>
 
-          <button 
-            onClick={detectUserLocation}
-            style={{
-              display: 'flex',
-              alignItems: 'center',
-              gap: '0.5rem',
-              padding: '0.5rem 1rem',
-              backgroundColor: locationAccuracy && locationAccuracy > 50 ? '#f97316' : '#4caf50',
-              color: 'white',
-              border: 'none',
-              borderRadius: '0.5rem',
-              cursor: 'pointer',
-              fontSize: '0.875rem',
-              fontWeight: 600,
-              transition: 'background-color 0.3s'
-            }}
-            title={locationAccuracy ? `Accuracy: ${locationAccuracy}m` : "Getting your location..."}
-          >
-            <MapPin size={16} /> 
-            {locationAccuracy ? `My Location (${locationAccuracy}m)` : 'My Location'}
-          </button>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
+            <button 
+              onClick={detectUserLocation}
+              style={{
+                display: 'flex',
+                alignItems: 'center',
+                gap: '0.5rem',
+                padding: '0.5rem 1rem',
+                backgroundColor: locationError ? '#ef4444' : (locationAccuracy && locationAccuracy > 50 ? '#f97316' : '#4caf50'),
+                color: 'white',
+                border: 'none',
+                borderRadius: '0.5rem',
+                cursor: 'pointer',
+                fontSize: '0.875rem',
+                fontWeight: 600,
+                transition: 'background-color 0.3s'
+              }}
+              title={locationError ? locationError : (locationAccuracy ? `Accuracy: ${locationAccuracy}m` : "Getting your location...")}
+            >
+              <MapPin size={16} /> 
+              {locationLoading 
+                ? '⏳ Detecting...' 
+                : locationError 
+                ? '❌ Error' 
+                : (locationAccuracy ? `My Location (${locationAccuracy}m)` : 'My Location')}
+            </button>
+            {locationError && (
+              <span style={{ fontSize: '0.75rem', color: '#ef4444', fontWeight: 500 }}>
+                {locationError}
+              </span>
+            )}
+          </div>
 
           <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
             <span style={{ fontSize: '0.75rem', fontWeight: 800, color: '#6b7280' }}>STATUS</span>
@@ -231,12 +230,13 @@ export default function FoodMapPage() {
       <div className="map-main-container">
         {view === 'map' ? (
           <MapContainer center={userLocation} zoom={13} zoomControl={false} scrollWheelZoom={true}>
+            <MapCenterUpdater center={userLocation} />
             <TileLayer
               attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
               url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
             />
 
-            {/* User Blue Dot */}
+            {/* User Location Marker - Red Pin */}
             <Marker position={userLocation} icon={UserLocationMarker()} />
 
             {MOCK_FOOD_POSTS.map(post => (

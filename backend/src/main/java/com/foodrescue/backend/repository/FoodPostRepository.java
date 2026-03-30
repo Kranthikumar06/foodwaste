@@ -12,6 +12,7 @@ import java.util.List;
 public interface FoodPostRepository extends JpaRepository<FoodPost, Long> {
     List<FoodPost> findByDonorOrderByCreatedAtDesc(User donor);
     List<FoodPost> findByStatus(PostStatus status);
+    List<FoodPost> findByStatusOrderByCreatedAtDesc(PostStatus status);
     List<FoodPost> findByStatusAndPickupWindowEndBefore(PostStatus status, LocalDateTime time);
 
     @Query(value = """

@@ -62,6 +62,11 @@ public class FoodPostService {
                 .stream().map(p -> toResponse(p, null)).toList();
     }
 
+    public List<FoodPostResponse> getAllAvailablePosts() {
+        return foodPostRepository.findByStatusOrderByCreatedAtDesc(PostStatus.LIVE)
+                .stream().map(p -> toResponse(p, null)).toList();
+    }
+
     public List<FoodPostResponse> getDonorPosts(String userEmail) {
         User donor = userRepository.findByEmail(userEmail)
                 .orElseThrow(() -> new ResourceNotFoundException("User not found"));

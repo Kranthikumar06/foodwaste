@@ -19,6 +19,8 @@ import 'leaflet/dist/leaflet.css';
 import L from 'leaflet';
 import { useNavigate } from 'react-router-dom';
 import toast from 'react-hot-toast';
+import { useGeolocation } from '../../hooks/useGeolocation';
+import { createFoodPost } from '../../api/foodPostApi';
 import './PostFoodPage.css';
 
 // Fix Leaflet icons
@@ -34,30 +36,63 @@ const FOOD_TYPES = [
   'Sweets', 'Fruits', 'Vegetables', 'Snacks', 'Other'
 ];
 
+// Component to update map center when location changes
+const MapCenterUpdater = ({ center }) => {
+  const map = useMap();
+  React.useEffect(() => {
+    map.setView(center, 15);
+  }, [center, map]);
+  return null;
+};
+
 export default function PostFoodPage() {
   const navigate = useNavigate();
+  const { location: detectedLocation } = useGeolocation();
   const [loading, setLoading] = useState(false);
+  const [location, setLocation] = useState(detectedLocation); // Start with detected location
+  
+  // Helper to format time as HH:MM
+  const formatTimeToHHMM = (date = new Date()) => {
+    const hours = String(date.getHours()).padStart(2, '0');
+    const minutes = String(date.getMinutes()).padStart(2, '0');
+    return `${hours}:${minutes}`;
+  };
+
+  // Helper to create LocalDateTime string (YYYY-MM-DDTHH:MM:SS) 
+  // Backend expects naive LocalDateTime without timezone
+  const createLocalDateTimeString = (dateStr, timeStr) => {
+    if (!dateStr || !timeStr) return null;
+    return `${dateStr}T${timeStr}:00`;
+  };
+
   const [formData, setFormData] = useState({
     foodType: '',
     quantity: '',
     cookedDate: new Date().toISOString().split('T')[0],
-    cookedTime: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: false }),
+    cookedTime: formatTimeToHHMM(),
     description: '',
-    pickupFrom: '',
-    pickupUntil: '',
+    pickupFrom: formatTimeToHHMM(new Date(Date.now() + 60 * 60 * 1000)), // 1 hour from now
+    pickupUntil: formatTimeToHHMM(new Date(Date.now() + 3 * 60 * 60 * 1000)), // 3 hours from now
     address: '',
     isRecurring: false,
     recurringDays: [],
   });
 
   const [safetyStatus, setSafetyStatus] = useState(null); // 'safe', 'warn', 'expired'
-  const [location, setLocation] = useState([17.4483, 78.3915]); // Hyderabad
   const [imagePreview, setImagePreview] = useState(null);
+
+  // Update location when detected location changes
+  useEffect(() => {
+    if (detectedLocation && detectedLocation !== location) {
+      setLocation(detectedLocation);
+    }
+  }, [detectedLocation]);
 
   // Dynamic Safety Check
   useEffect(() => {
     if (formData.cookedDate && formData.cookedTime) {
-      const cooked = new Date(`${formData.cookedDate}T${formData.cookedTime}`);
+      // Parse local datetime (not UTC)
+      const cooked = new Date(`${formData.cookedDate}T${formData.cookedTime}:00`);
       const now = new Date();
       const diffHours = (now - cooked) / (1000 * 60 * 60);
 
@@ -76,15 +111,82 @@ export default function PostFoodPage() {
 
   const handlePost = async (e) => {
     e.preventDefault();
-    if (safetyStatus?.type === 'expired') return;
+    if (safetyStatus?.type === 'expired') {
+      toast.error('Cannot post expired food');
+      return;
+    }
+    
+    if (!formData.foodType || !formData.quantity || !formData.pickupFrom || !formData.pickupUntil) {
+      toast.error('Please fill in all required fields');
+      return;
+    }
+
+    if (!location || location.length !== 2) {
+      toast.error('Please detect your location');
+      return;
+    }
     
     setLoading(true);
-    // Mock API
-    setTimeout(() => {
+    try {
+      // Create LocalDateTime strings (YYYY-MM-DDTHH:MM:SS) without timezone
+      const cookedAtDateTime = createLocalDateTimeString(formData.cookedDate, formData.cookedTime);
+      const pickupFromDateTime = createLocalDateTimeString(formData.cookedDate, formData.pickupFrom);
+      const pickupUntilDateTime = createLocalDateTimeString(formData.cookedDate, formData.pickupUntil);
+
+      if (!cookedAtDateTime || !pickupFromDateTime || !pickupUntilDateTime) {
+        toast.error('Please fill in all date and time fields');
+        setLoading(false);
+        return;
+      }
+
+      const foodPostData = {
+        foodType: formData.foodType,
+        quantityKg: parseFloat(formData.quantity),
+        description: formData.description,
+        cookedAt: cookedAtDateTime,
+        pickupWindowStart: pickupFromDateTime,
+        pickupWindowEnd: pickupUntilDateTime,
+        photoUrl: imagePreview, // Optional - you may need to upload image separately
+        latitude: location[0],
+        longitude: location[1],
+        address: formData.address,
+        isRecurring: formData.isRecurring,
+        recurringDays: formData.recurringDays.join(',')
+      };
+
+      console.log('📤 Sending food post:', foodPostData);
+      console.log('Current time:', new Date().toISOString());
+      console.log('Cooked at (backend will receive):', cookedAtDateTime);
+      
+      const response = await createFoodPost(foodPostData);
+      
       setLoading(false);
-      toast.success('Food posted successfully! Volunteers are being notified.');
-      navigate('/donor/posts');
-    }, 1500);
+      toast.success('🎉 Food posted successfully! Volunteers are being notified.');
+      
+      // Reset form
+      setFormData({
+        foodType: '',
+        quantity: '',
+        cookedDate: new Date().toISOString().split('T')[0],
+        cookedTime: formatTimeToHHMM(),
+        description: '',
+        pickupFrom: formatTimeToHHMM(new Date(Date.now() + 60 * 60 * 1000)),
+        pickupUntil: formatTimeToHHMM(new Date(Date.now() + 3 * 60 * 60 * 1000)),
+        address: '',
+        isRecurring: false,
+        recurringDays: [],
+      });
+      setImagePreview(null);
+      
+      // Navigate to posts page
+      setTimeout(() => {
+        navigate('/donor/posts');
+      }, 1500);
+    } catch (error) {
+      setLoading(false);
+      toast.error(error.message || 'Failed to post food. Please try again.');
+      console.error('Post creation error:', error);
+    }
   };
 
   const handleLocationDetect = () => {
@@ -251,8 +353,19 @@ export default function PostFoodPage() {
               </div>
               <div className="map-preview">
                 <MapContainer center={location} zoom={15} style={{ height: '180px', borderRadius: '1rem' }} zoomControl={false}>
+                  <MapCenterUpdater center={location} />
                   <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
-                  <Marker position={location} />
+                  <Marker 
+                    position={location}
+                    icon={L.icon({
+                      iconUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-red.png',
+                      shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png',
+                      iconSize: [25, 41],
+                      iconAnchor: [12, 41],
+                      popupAnchor: [1, -34],
+                      shadowSize: [41, 41]
+                    })}
+                  />
                 </MapContainer>
               </div>
             </div>

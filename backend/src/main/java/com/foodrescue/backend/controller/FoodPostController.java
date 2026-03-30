@@ -58,4 +58,9 @@ public class FoodPostController {
                 .orElseThrow(() -> new com.foodrescue.backend.exception.ResourceNotFoundException("Post not found"));
         return ResponseEntity.ok(ApiResponse.ok("Post found", post));
     }
+
+    @GetMapping("/food-posts/available")
+    public ResponseEntity<ApiResponse<List<FoodPostResponse>>> getAvailablePosts() {
+        return ResponseEntity.ok(ApiResponse.ok("Available posts", foodPostService.getAllAvailablePosts()));
+    }
 }

@@ -7,7 +7,8 @@ import {
   User, 
   LogOut,
   ChevronRight,
-  History
+  History,
+  Leaf
 } from 'lucide-react';
 import { useDispatch } from 'react-redux';
 import { logout } from '../../store/authSlice';
@@ -32,7 +33,7 @@ export default function VolunteerSidebar() {
   return (
     <aside className="volunteer-sidebar">
       <div className="sidebar-brand">
-        <div className="brand-logo">F</div>
+        <Leaf size={32} className="brand-icon" />
         <span>FoodWaste</span>
       </div>
 
